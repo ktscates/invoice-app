@@ -1,1 +1,9 @@
-<div class="bg-yellow-500 min-h-screen">App component workks!!</div>
+<div class="flex flex-col lg:flex-row h-screen">
+  <!-- Sidebar -->
+  <app-sidebar />
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 bg-lightbg">
+    <router-outlet />
+  </div>
+</div>

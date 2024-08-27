@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
+import { HeaderComponent } from '../../components/header/header.component';
+import { InvoiceItemCardComponent } from '../../components/invoice-item-card/invoice-item-card.component';
 
 @Component({
   selector: 'app-invoice-list',
   standalone: true,
-  imports: [],
+  imports: [HeaderComponent, InvoiceItemCardComponent],
   templateUrl: './invoice-list.component.html',
-  styleUrl: './invoice-list.component.css'
+  styleUrl: './invoice-list.component.css',
 })
-export class InvoiceListComponent {
-
-}
+export class InvoiceListComponent {}

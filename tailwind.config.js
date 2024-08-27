@@ -25,6 +25,8 @@ module.exports = {
         dark: "#141625",
         sidebar: "#373B53",
         divider: "#494E6E",
+        green: "#33D69F",
+        orange: "#FF8F00",
       },
 
       fontFamily: {

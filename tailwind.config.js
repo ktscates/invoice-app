@@ -27,6 +27,7 @@ module.exports = {
         divider: "#494E6E",
         green: "#33D69F",
         orange: "#FF8F00",
+        tablebg: "#F9FAFE",
       },
 
       fontFamily: {

@@ -1,5 +1,9 @@
+@if (invoices$) {
 <div class="flex flex-col gap-4">
   @for (invoice of invoices$ | async; track $index) {
   <app-invoice-item-card [invoice]="invoice" />
   }
 </div>
+} @else {
+<app-empty-invoices />
+}

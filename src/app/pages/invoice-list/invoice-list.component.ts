@@ -7,11 +7,12 @@ import { Invoice } from '../../models/invoice.model';
 import * as InvoiceActions from '../../store/invoice.actions';
 import * as selector from '../../store/invoice.selectors';
 import { CommonModule } from '@angular/common';
+import { EmptyInvoicesComponent } from '../../components/empty-invoices/empty-invoices.component';
 
 @Component({
   selector: 'app-invoice-list',
   standalone: true,
-  imports: [InvoiceItemCardComponent, CommonModule],
+  imports: [InvoiceItemCardComponent, EmptyInvoicesComponent, CommonModule],
   templateUrl: './invoice-list.component.html',
   styleUrl: './invoice-list.component.css',
 })

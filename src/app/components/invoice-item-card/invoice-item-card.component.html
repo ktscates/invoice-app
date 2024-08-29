@@ -1,5 +1,6 @@
 <div
   class="hidden sm:flex justify-between items-center bg-white px-8 py-5 rounded-lg shadow-sm cursor-pointer"
+  (click)="viewDetails()"
 >
   <p class="text-black text-base font-bold">
     <span class="text-blueGray">#</span>{{ invoice.id }}
@@ -34,6 +35,7 @@
 
 <div
   class="sm:hidden flex flex-col gap-4 bg-white px-8 py-5 rounded-lg shadow-sm cursor-pointer"
+  (click)="viewDetails()"
 >
   <div class="flex justify-between items-center">
     <p class="text-black text-base font-bold">#{{ invoice.id }}</p>

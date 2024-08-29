@@ -28,6 +28,7 @@ module.exports = {
         green: "#33D69F",
         orange: "#FF8F00",
         tablebg: "#F9FAFE",
+        items: "#777F98",
       },
 
       fontFamily: {

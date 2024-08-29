@@ -4,6 +4,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { EmptyInvoicesComponent } from './components/empty-invoices/empty-invoices.component';
 import { HeaderComponent } from './components/header/header.component';
 import { InvoiceDetailCardComponent } from './components/invoice-detail-card/invoice-detail-card.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+import { InvoiceDetailsComponent } from './pages/invoice-details/invoice-details.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,9 @@ import { InvoiceDetailCardComponent } from './components/invoice-detail-card/inv
     SidebarComponent,
     EmptyInvoicesComponent,
     HeaderComponent,
+    DrawerComponent,
+    InvoiceDetailCardComponent,
+    InvoiceDetailsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

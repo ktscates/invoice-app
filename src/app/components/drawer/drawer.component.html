@@ -1,1 +1,241 @@
-<p>drawer works!</p>
+<div
+  *ngIf="isOpen"
+  class="sm:block hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+  (click)="closeDrawer()"
+></div>
+
+<div
+  *ngIf="isOpen"
+  class="fixed inset-y-0 lg:left-[103px] w-full sm:w-3/4 sm:top-20 lg:top-0 top-20 sm:rounded-tr-3xl sm:rounded-br-3xl lg:w-2/5 bg-white shadow-lg z-40 transform transition-transform duration-300"
+>
+  <div class="p-8 overflow-y-auto drawer-content h-[calc(100%-80px)]">
+    <!-- Drawer Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-bold text-black">Invoice</h2>
+      <button
+        class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        (click)="closeDrawer()"
+      >
+        <app-icons iconType="close" />
+      </button>
+    </div>
+
+    <!-- Form Content -->
+    <form>
+      <!-- Bill From -->
+      <div class="mb-8">
+        <h3 class="text-purple font-bold mb-4">Bill From</h3>
+        <div>
+          <label class="block text-blueGray font-semibold mb-3"
+            >Street Address</label
+          >
+          <input
+            type="text"
+            class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+            name="streetAddressFrom"
+          />
+        </div>
+        <div class="grid grid-cols-3 gap-4 mt-6">
+          <div>
+            <label class="block text-blueGray font-semibold mb-3">City</label>
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="cityFrom"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Post Code</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="postCodeFrom"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Country</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="countryFrom"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill To -->
+      <div class="mb-8">
+        <h3 class="text-purple font-bold mb-4">Bill To</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Client's Name</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="clientName"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Client's Email</label
+            >
+            <input
+              type="email"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="clientEmail"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Street Address</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="streetAddressTo"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3">City</label>
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="cityTo"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Post Code</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="postCodeTo"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Country</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="countryTo"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice Details -->
+      <div class="mb-8">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Invoice Date</label
+            >
+            <input
+              type="date"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="invoiceDate"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Payment Terms</label
+            >
+            <select
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="paymentTerms"
+            >
+              <option value="Net 30 Days">Net 30 Days</option>
+              <option value="Net 15 Days">Net 15 Days</option>
+              <option value="Net 7 Days">Net 7 Days</option>
+            </select>
+          </div>
+          <div class="col-span-2">
+            <label class="block text-blueGray font-semibold mb-3"
+              >Project Description</label
+            >
+            <input
+              type="text"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="projectDescription"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Item List -->
+      <div>
+        <h3 class="text-items font-bold text-lg mb-4">Item List</h3>
+        <div class="mb-4 grid grid-cols-4 gap-4">
+          <div>
+            <label class="block text-blueGray font-semibold mb-3"
+              >Item Name</label
+            >
+            <input
+              type="text"
+              placeholder="Item Name"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="itemName"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3">QTY.</label>
+            <input
+              type="number"
+              placeholder="QTY."
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="itemQuantity"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3">Price</label>
+            <input
+              type="number"
+              placeholder="Price"
+              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+              name="itemPrice"
+            />
+          </div>
+          <div>
+            <label class="block text-blueGray font-semibold mb-3">Total</label>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-800 font-semibold">total</span>
+              <button class="text-red-500 hover:text-red-700">
+                <app-icons iconType="trash" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="text-blueGray bg-blueGray bg-opacity-10 py-4 w-full font-bold hover:text-purple-800 mt-4"
+        >
+          + Add New Item
+        </button>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex justify-between items-center mt-8">
+        <button
+          (click)="closeDrawer()"
+          class="text-blueGray bg-blueGray bg-opacity-10 rounded-full py-4 px-6 font-bold"
+        >
+          Cancel
+        </button>
+        <button
+          class="text-white bg-purple hover:bg-purpleHover font-bold py-4 px-6 rounded-full"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

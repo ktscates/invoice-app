@@ -12,7 +12,12 @@ import { EmptyInvoicesComponent } from '../../components/empty-invoices/empty-in
 @Component({
   selector: 'app-invoice-list',
   standalone: true,
-  imports: [InvoiceItemCardComponent, EmptyInvoicesComponent, CommonModule],
+  imports: [
+    InvoiceItemCardComponent,
+    EmptyInvoicesComponent,
+    CommonModule,
+    HeaderComponent,
+  ],
   templateUrl: './invoice-list.component.html',
   styleUrl: './invoice-list.component.css',
 })

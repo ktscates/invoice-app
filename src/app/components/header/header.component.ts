@@ -17,14 +17,10 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   isDropdownOpen = false;
   @Input() drawer!: DrawerComponent;
-  invoices$: Observable<Invoice[]>;
   totalInvoices$: Observable<number>;
 
   constructor(private store: Store) {
-    this.invoices$ = this.store.select(selectors.selectAllInvoices); // Update the selector if needed
-    this.totalInvoices$ = this.invoices$.pipe(
-      map((invoices) => invoices.length)
-    );
+    this.totalInvoices$ = this.store.select(selectors.selectInvoiceTotal);
   }
 
   toggleDropdown() {

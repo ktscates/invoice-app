@@ -1,24 +1,28 @@
 <div class="flex justify-between items-center lg:mb-20 sm:mb-14 mb-8">
   <div>
-    <h1
-      class="text-black mb-2 lg:text-[32px] md:text-[32px] sm:text-[32px] text-xl font-bold"
-    >
-      Invoices
-    </h1>
-    <p class="sm:block hidden text-gray text-xs font-medium">
-      There are 7 total invoices
+    <h1 class="text-black mb-2 sm:text-5xl text-3xl font-bold">Invoices</h1>
+    <p class="sm:block hidden text-gray text-base font-medium">
+      There are {{ totalInvoices$ | async }} total invoices
     </p>
-    <p class="block sm:hidden text-gray text-xs font-medium">
-      7 total invoices
+    <p class="block sm:hidden text-gray text-base font-medium">
+      {{ totalInvoices$ | async }} total invoices
     </p>
   </div>
 
   <div class="relative flex sm:gap-10 gap-3 items-center">
     <div
-      class="text-black text-xs font-bold flex items-center sm:gap-4 gap-3 cursor-pointer"
+      class="hidden text-black text-base font-semibold sm:flex items-center sm:gap-4 gap-3 cursor-pointer"
       (click)="toggleDropdown()"
     >
-      Filter <span class="hidden sm:block">by status</span>
+      Filter by status
+      <app-icons iconType="arrow-down" />
+    </div>
+
+    <div
+      class="sm:hidden text-black text-base font-semibold flex items-center sm:gap-4 gap-3 cursor-pointer"
+      (click)="toggleDropdown()"
+    >
+      Filter
       <app-icons iconType="arrow-down" />
     </div>
 
@@ -27,14 +31,14 @@
     <div
       class="absolute sm:right-40 right-10 sm:top-10 top-14 mt-2 w-48 bg-white rounded-md shadow-lg z-20"
     >
-      <ul class="py-1 text-navy">
-        <li class="px-4 py-2 flex gap-2 items-center font-bold cursor-pointer">
+      <ul class="py-1 text-navy text-base font-semibold">
+        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
           <input type="checkbox" /> Paid
         </li>
-        <li class="px-4 py-2 flex gap-2 items-center font-bold cursor-pointer">
+        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
           <input type="checkbox" /> Pending
         </li>
-        <li class="px-4 py-2 flex gap-2 items-center font-bold cursor-pointer">
+        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
           <input type="checkbox" /> Draft
         </li>
       </ul>
@@ -42,11 +46,18 @@
     }
 
     <button
-      class="flex items-center sm:gap-4 gap-2 rounded-full text-white text-xs font-bold bg-purple hover:bg-purpleHover sm:p-4 p-3"
+      class="hidden sm:flex items-center sm:gap-4 gap-2 rounded-full text-white text-base font-bold bg-purple hover:bg-purpleHover sm:p-4 p-2"
       (click)="openDrawer()"
     >
       <app-icons class="bg-white p-2 rounded-full" iconType="add" />
-      New <span class="hidden sm:block">invoice</span>
+      New Invoice
+    </button>
+    <button
+      class="sm:hidden flex items-center sm:gap-4 gap-2 rounded-full text-white text-base font-bold bg-purple hover:bg-purpleHover sm:p-4 p-3"
+      (click)="openDrawer()"
+    >
+      <app-icons class="bg-white p-2 rounded-full" iconType="add" />
+      New
     </button>
   </div>
 </div>

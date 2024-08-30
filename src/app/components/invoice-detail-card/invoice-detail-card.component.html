@@ -1,6 +1,7 @@
 @if (invoice$ | async) {
 <div
   class="flex justify-start items-center gap-4 text-sm text-black font-semibold cursor-pointer"
+  (click)="goBack()"
 >
   <app-icons iconType="arrow-left" />
   <h1 class="mt-1">Go back</h1>
@@ -9,12 +10,10 @@
 <div
   class="flex justify-between items-center bg-white px-8 py-5 mt-8 rounded-lg shadow-sm"
 >
-  <div
-    class="flex sm:justify-start justify-between w-full sm:gap-4 items-center"
-  >
+  <div class="flex justify-start sm:gap-4 items-center">
     <h1 class="text-gray text-sm font-semibold">Status</h1>
     <div
-      class="flex gap-2 items-center text-xs font-bold bg-opacity-10 px-8 py-3 rounded-md"
+      class="flex gap-2 items-center text-xs font-bold bg-opacity-10 px-6 py-3 rounded-md"
       [ngClass]="{
               'text-orange bg-orange': (invoice$ | async)!.status === 'pending',
               'text-green bg-green ': (invoice$ | async)!.status === 'paid',
@@ -35,17 +34,22 @@
       }}
     </div>
   </div>
-  <div class="sm:flex gap-5 sm:relative absolute bottom-0">
+  <div class="flex gap-5">
     <button
       class="text-blueGray text-sm font-bold bg-blueGray bg-opacity-10 px-8 py-4 rounded-full"
+      type="button"
     >
       Edit
     </button>
-    <button class="text-white text-sm font-bold bg-red px-8 py-4 rounded-full">
+    <button
+      class="text-white text-sm font-bold bg-red px-8 py-4 rounded-full"
+      type="button"
+    >
       Delete
     </button>
     <button
       class="text-white text-sm font-bold bg-purple px-8 py-4 rounded-full"
+      type="button"
     >
       Mark as Paid
     </button>

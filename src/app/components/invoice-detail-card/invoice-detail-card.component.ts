@@ -28,4 +28,8 @@ export class InvoiceDetailCardComponent {
       this.store.dispatch(InvoiceActions.loadInvoice({ invoiceId: id }));
     }
   }
+
+  goBack() {
+    window.history.back();
+  }
 }

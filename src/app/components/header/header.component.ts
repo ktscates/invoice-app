@@ -28,10 +28,6 @@ export class HeaderComponent {
   }
 
   openDrawer() {
-    if (this.drawer) {
-      this.drawer.openDrawer();
-    } else {
-      console.warn('Drawer is not initialized');
-    }
+    this.drawer.openDrawer();
   }
 }

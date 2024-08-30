@@ -22,7 +22,7 @@ import { selectSelectedInvoice } from '../../store/invoice.selectors';
   styleUrls: ['./drawer.component.css'],
 })
 export class DrawerComponent implements OnInit {
-  @Input() invoiceId: string | null = null; // To know if we are editing
+  @Input() invoiceId: string | null = null;
   invoiceForm!: FormGroup;
   isEditing: boolean = false;
   isOpen = false;

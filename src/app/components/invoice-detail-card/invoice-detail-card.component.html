@@ -1,3 +1,4 @@
+@if (invoice$ | async) {
 <div
   class="flex justify-start items-center gap-4 text-sm text-black font-semibold cursor-pointer"
 >
@@ -13,10 +14,25 @@
   >
     <h1 class="text-gray text-sm font-semibold">Status</h1>
     <div
-      class="flex gap-2 items-center text-orange text-xs font-bold bg-orange bg-opacity-10 px-8 py-3 rounded-md"
+      class="flex gap-2 items-center text-xs font-bold bg-opacity-10 px-8 py-3 rounded-md"
+      [ngClass]="{
+              'text-orange bg-orange': (invoice$ | async)!.status === 'pending',
+              'text-green bg-green ': (invoice$ | async)!.status === 'paid',
+              'text-sidebar bg-sidebar': (invoice$ | async)!.status === 'draft',
+              }"
     >
-      <div class="text-orange p-1 bg-orange rounded-full"></div>
-      Pending
+      <div
+        class="text-orange p-1 bg-orange rounded-full"
+        [ngClass]="{
+              'text-orange bg-orange': (invoice$ | async)!.status === 'pending',
+              'text-green bg-green': (invoice$ | async)!.status === 'paid',
+              'text-sidebar bg-sidebar': (invoice$ | async)!.status === 'draft',
+              }"
+      ></div>
+      {{
+        (invoice$ | async)!.status.charAt(0).toUpperCase() +
+          (invoice$ | async)!.status.slice(1)
+      }}
     </div>
   </div>
   <div class="sm:flex gap-5 sm:relative absolute bottom-0">
@@ -39,38 +55,57 @@
 <div class="bg-white mt-6 rounded-lg sm:p-12 p-6">
   <div class="flex justify-between items-centers">
     <div>
-      <h1 class="text-black text-base font-bold">#XM9141</h1>
-      <p class="text-blueGray text-sm font-semibold">Graphic Design</p>
+      <h1 class="text-black text-base font-bold">
+        #{{ (invoice$ | async)!.id }}
+      </h1>
+      <p class="text-blueGray text-sm font-semibold">
+        {{ (invoice$ | async)!.description }}
+      </p>
     </div>
     <p class="text-blueGray font-semibold text-sm text-right">
-      19 Union Terrace <br />London <br />E1 3EZ <br />United Kingdom
+      {{ (invoice$ | async)!.senderAddress.street }} <br />{{
+        (invoice$ | async)!.senderAddress.city
+      }}
+      <br />{{ (invoice$ | async)!.senderAddress.postCode }} <br />{{
+        (invoice$ | async)!.senderAddress.country
+      }}
     </p>
   </div>
 
-  <div class="flex sm:justify-between flex-wrap mt-6">
+  <div class="grid sm:grid-cols-3 grid-cols-2 mt-6">
     <div class="flex flex-col gap-4">
       <div>
         <p class="text-blueGray text-sm font-semibold">Invoice Date</p>
-        <h1 class="text-black text-base font-bold">21 Aug 2021</h1>
+        <h1 class="text-black text-base font-bold">
+          {{ (invoice$ | async)!.createdAt | date : "dd MMM yyyy" }}
+        </h1>
       </div>
       <div>
         <p class="text-blueGray text-sm font-semibold">Payment Due</p>
-        <h1 class="text-black text-base font-bold">21 Sep 2021</h1>
+        <h1 class="text-black text-base font-bold">
+          {{ (invoice$ | async)!.paymentDue | date : "dd MMM yyyy" }}
+        </h1>
       </div>
     </div>
     <div>
       <p class="text-blueGray text-sm font-semibold">Bill To</p>
-      <h1 class="text-black text-base font-bold">Alex Grim</h1>
+      <h1 class="text-black text-base font-bold">
+        {{ (invoice$ | async)!.clientName }}
+      </h1>
       <p class="text-blueGray font-semibold text-sm">
-        84 Church Way<br />
-        Bradford <br />
-        BD1 9PB<br />
-        United Kingdom
+        {{ (invoice$ | async)!.clientAddress.street }} <br />{{
+          (invoice$ | async)!.clientAddress.city
+        }}
+        <br />{{ (invoice$ | async)!.clientAddress.postCode }} <br />{{
+          (invoice$ | async)!.clientAddress.country
+        }}
       </p>
     </div>
     <div>
       <p class="text-blueGray text-sm font-semibold">Sent to</p>
-      <h1 class="text-black text-base font-bold">alexgrim&#64;mail.com</h1>
+      <h1 class="text-black text-base font-bold">
+        {{ (invoice$ | async)!.clientEmail }}
+      </h1>
     </div>
   </div>
 
@@ -82,24 +117,31 @@
         <th class="w-1/6 text-right">Price</th>
         <th class="w-1/6 text-right">Total</th>
       </tr>
+      @for (item of (invoice$ | async)!.items; track $index) {
       <tr>
-        <td class="pt-8 text-black text-sm font-bold">Logo Design</td>
-        <td class="pt-8 text-blueGray text-sm font-bold">1</td>
-        <td class="pt-8 text-blueGray text-sm font-bold text-right">$500.00</td>
-        <td class="pt-8 text-black text-sm font-bold text-right">$500.00</td>
+        <td class="pt-8 text-black text-sm font-bold">
+          {{ item.name }}
+        </td>
+        <td class="pt-8 text-blueGray text-sm font-bold">
+          {{ item.quantity }}
+        </td>
+        <td class="pt-8 text-blueGray text-sm font-bold text-right">
+          {{ item.price | currency : "GBP" : "symbol" }}
+        </td>
+        <td class="pt-8 text-black text-sm font-bold text-right">
+          {{ item.total | currency : "GBP" : "symbol" }}
+        </td>
       </tr>
-      <tr>
-        <td class="pt-8 text-black text-sm font-bold">Logo Design</td>
-        <td class="pt-8 text-blueGray text-sm font-bold">1</td>
-        <td class="pt-8 text-blueGray text-sm font-bold text-right">$500.00</td>
-        <td class="pt-8 text-black text-sm font-bold text-right">$500.00</td>
-      </tr>
+      }
     </table>
   </div>
   <div
     class="bg-sidebar flex justify-between items-center px-8 py-4 rounded-b-lg"
   >
     <p class="text-white text-sm font-semibold">Amount Due</p>
-    <h1 class="text-white text-2xl font-semibold">$ 556.00</h1>
+    <h1 class="text-white text-2xl font-semibold">
+      {{ (invoice$ | async)!.total | currency : "GBP" : "symbol" }}
+    </h1>
   </div>
 </div>
+}

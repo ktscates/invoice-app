@@ -4,7 +4,9 @@ import { Invoice, InvoiceState } from '../models/invoice.model';
 import * as InvoiceActions from './invoice.actions';
 
 // Create Entity Adapter
-export const invoiceAdapter = createEntityAdapter<Invoice>();
+export const invoiceAdapter = createEntityAdapter<Invoice>({
+  selectId: (entity) => entity.id, // Ensure this matches your entity's unique ID field
+});
 
 // Define initial state using invoice adapter
 const initialState: InvoiceState = invoiceAdapter.getInitialState({
@@ -18,6 +20,16 @@ const _invoiceReducer = createReducer(
     invoiceAdapter.setAll(invoices, state)
   ),
   on(InvoiceActions.loadInvoicesFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(InvoiceActions.loadInvoiceSuccess, (state, { invoice }) =>
+    invoiceAdapter.upsertOne(invoice, {
+      ...state,
+      selectedInvoiceId: invoice.id,
+    })
+  ),
+  on(InvoiceActions.loadInvoiceFailure, (state, { error }) => ({
     ...state,
     error,
   })),

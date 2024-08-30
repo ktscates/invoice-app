@@ -5,6 +5,10 @@ const LOAD_INVOICES = '[Invoice List] Load Invoices';
 const LOAD_INVOICES_SUCCESS = '[Invoice List] Load Invoices With Success';
 const LOAD_INVOICES_FAILURE = '[Invoice List] Load Invoices With Failure';
 
+const LOAD_INVOICE = '[Invoice Detail] Load Invoice';
+const LOAD_INVOICE_SUCCESS = '[Invoice Detail] Load Invoice With Success';
+const LOAD_INVOICE_FAILURE = '[Invoice Detail] Load Invoice With Failure';
+
 const CREATE_INVOICE = '[Invoice Form] Create Invoice';
 const UPDATE_INVOICE = '[Invoice Form] Update Invoice';
 const DELETE_INVOICE = '[Invoice List] Delete Invoice';
@@ -20,6 +24,20 @@ export const loadInvoicesFailure = createAction(
   LOAD_INVOICES_FAILURE,
   props<{ error: any }>()
 );
+
+export const loadInvoice = createAction(
+  LOAD_INVOICE,
+  props<{ invoiceId: string }>()
+);
+export const loadInvoiceSuccess = createAction(
+  LOAD_INVOICE_SUCCESS,
+  props<{ invoice: Invoice }>()
+);
+export const loadInvoiceFailure = createAction(
+  LOAD_INVOICE_FAILURE,
+  props<{ error: any }>()
+);
+
 export const createInvoice = createAction(
   CREATE_INVOICE,
   props<{ invoice: Invoice }>()

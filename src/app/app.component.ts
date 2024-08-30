@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +14,11 @@ import { DrawerComponent } from './components/drawer/drawer.component';
 })
 export class AppComponent {
   title = 'invoice-app';
+  showHeader = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.showHeader = !this.router.url.includes('invoice-details');
+    });
+  }
 }

@@ -2,18 +2,20 @@
   class="hidden sm:flex justify-between items-center bg-white px-8 py-5 rounded-lg shadow-sm cursor-pointer"
   (click)="viewDetails()"
 >
-  <p class="text-black text-base font-bold">
+  <p class="text-black text-base font-bold w-full">
     <span class="text-blueGray">#</span>{{ invoice.id }}
   </p>
-  <p class="text-gray text-base font-medium">
+  <p class="text-gray text-base font-medium w-full">
     Due {{ invoice.paymentDue | date : "dd MMM yyyy" }}
   </p>
-  <p class="text-gray text-base font-medium">{{ invoice.clientName }}</p>
-  <p class="text-black text-xl font-bold">
+  <p class="text-gray text-base font-medium w-full">
+    {{ invoice.clientName }}
+  </p>
+  <p class="text-black text-xl font-bold w-full">
     {{ invoice.total | currency : "GBP" : "symbol" }}
   </p>
   <div
-    class="flex gap-2 items-center text-base font-bold bg-opacity-10 w-28 justify-center py-3 rounded-md"
+    class="flex gap-2 items-center text-base font-bold bg-opacity-10 w-1/2 justify-center py-3 rounded-md"
     [ngClass]="{
               'text-orange bg-orange': invoice.status === 'pending',
               'text-green bg-green': invoice.status === 'paid',
@@ -30,7 +32,7 @@
     ></div>
     {{ invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1) }}
   </div>
-  <app-icons iconType="arrow-right" />
+  <app-icons class="ml-6" iconType="arrow-right" />
 </div>
 
 <div
@@ -51,9 +53,9 @@
       </p>
     </div>
     <div
-      class="flex gap-2 items-center text-base font-bold bg-opacity-10 justify-center w-28 py-3 rounded-md"
+      class="flex gap-2 items-center text-base font-bold bg-opacity-10 justify-center sm:w-32 w-28 py-3 rounded-md"
       [ngClass]="{
-              'text-orange bg-orange px-8': invoice.status === 'pending',
+              'text-orange bg-orange': invoice.status === 'pending',
               'text-green bg-green': invoice.status === 'paid',
               'text-sidebar bg-sidebar': invoice.status === 'draft',
               }"

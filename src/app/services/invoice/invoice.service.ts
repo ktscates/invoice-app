@@ -15,6 +15,10 @@ export class InvoiceService {
     return this.http.get<Invoice[]>(this.apiUrl);
   }
 
+  getInvoiceById(id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(`${this.apiUrl}/${id}`);
+  }
+
   createInvoice(invoice: Invoice): Observable<Invoice> {
     return this.http.post<Invoice>(this.apiUrl, invoice);
   }

@@ -11,7 +11,9 @@
   <div class="p-8 overflow-y-auto drawer-content h-[calc(100%-80px)]">
     <!-- Drawer Header -->
     <div class="flex justify-between items-center mb-8">
-      <h2 class="text-2xl font-bold text-black">Invoice</h2>
+      <h2 class="text-2xl font-bold text-black">
+        {{ isEditing ? "Edit" : "New" }} Invoice
+      </h2>
       <button
         class="text-gray-500 hover:text-gray-700 focus:outline-none"
         (click)="closeDrawer()"
@@ -21,7 +23,7 @@
     </div>
 
     <!-- Form Content -->
-    <form>
+    <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
       <!-- Bill From -->
       <div class="mb-8">
         <h3 class="text-purple font-bold mb-4">Bill From</h3>
@@ -32,7 +34,7 @@
           <input
             type="text"
             class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-            name="streetAddressFrom"
+            formControlName="senderStreetAddress"
           />
         </div>
         <div class="grid grid-cols-3 gap-4 mt-6">
@@ -41,7 +43,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="cityFrom"
+              formControlName="senderCity"
             />
           </div>
           <div>
@@ -51,7 +53,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="postCodeFrom"
+              formControlName="senderPostCode"
             />
           </div>
           <div>
@@ -61,7 +63,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="countryFrom"
+              formControlName="senderCountry"
             />
           </div>
         </div>
@@ -78,7 +80,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="clientName"
+              formControlName="clientName"
             />
           </div>
           <div>
@@ -88,7 +90,7 @@
             <input
               type="email"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="clientEmail"
+              formControlName="clientEmail"
             />
           </div>
           <div>
@@ -98,7 +100,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="streetAddressTo"
+              formControlName="clientStreetAddress"
             />
           </div>
           <div>
@@ -106,7 +108,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="cityTo"
+              formControlName="clientCity"
             />
           </div>
           <div>
@@ -116,7 +118,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="postCodeTo"
+              formControlName="clientPostCode"
             />
           </div>
           <div>
@@ -126,7 +128,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="countryTo"
+              formControlName="clientCountry"
             />
           </div>
         </div>
@@ -142,7 +144,7 @@
             <input
               type="date"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="invoiceDate"
+              formControlName="invoiceDate"
             />
           </div>
           <div>
@@ -151,7 +153,7 @@
             >
             <select
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="paymentTerms"
+              formControlName="paymentTerms"
             >
               <option value="Net 30 Days">Net 30 Days</option>
               <option value="Net 15 Days">Net 15 Days</option>
@@ -165,7 +167,7 @@
             <input
               type="text"
               class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="projectDescription"
+              formControlName="projectDescription"
             />
           </div>
         </div>
@@ -174,49 +176,65 @@
       <!-- Item List -->
       <div>
         <h3 class="text-items font-bold text-lg mb-4">Item List</h3>
-        <div class="mb-4 grid grid-cols-4 gap-4">
-          <div>
-            <label class="block text-blueGray font-semibold mb-3"
-              >Item Name</label
-            >
-            <input
-              type="text"
-              placeholder="Item Name"
-              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="itemName"
-            />
-          </div>
-          <div>
-            <label class="block text-blueGray font-semibold mb-3">QTY.</label>
-            <input
-              type="number"
-              placeholder="QTY."
-              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="itemQuantity"
-            />
-          </div>
-          <div>
-            <label class="block text-blueGray font-semibold mb-3">Price</label>
-            <input
-              type="number"
-              placeholder="Price"
-              class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
-              name="itemPrice"
-            />
-          </div>
-          <div>
-            <label class="block text-blueGray font-semibold mb-3">Total</label>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-800 font-semibold">total</span>
-              <button class="text-red-500 hover:text-red-700">
-                <app-icons iconType="trash" />
-              </button>
+        <div formArrayName="items">
+          @for (item of items.controls; track $index) {
+          <div class="mb-4 grid grid-cols-4 gap-4" [formGroupName]="$index">
+            <div>
+              <label class="block text-blueGray font-semibold mb-3"
+                >Item Name</label
+              >
+              <input
+                type="text"
+                placeholder="Item Name"
+                class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+                formControlName="name"
+              />
+            </div>
+            <div>
+              <label class="block text-blueGray font-semibold mb-3">QTY.</label>
+              <input
+                type="number"
+                placeholder="QTY."
+                class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+                formControlName="quantity"
+              />
+            </div>
+            <div>
+              <label class="block text-blueGray font-semibold mb-3"
+                >Price</label
+              >
+              <input
+                type="number"
+                placeholder="Price"
+                class="w-full border border-lightGray rounded-md px-5 py-3 text-black"
+                formControlName="price"
+              />
+            </div>
+            <div>
+              <label class="block text-blueGray font-semibold mb-3"
+                >Total</label
+              >
+              <div class="flex items-center justify-between">
+                <span class="text-gray-800 font-semibold">{{
+                  item.get("total")?.value
+                }}</span>
+                <button class="text-red-500 hover:text-red-700">
+                  <button type="button" (click)="removeItem($index)">
+                    Remove
+                  </button>
+
+                  <!-- <app-icons (click)="removeItem($index)" iconType="trash" /> -->
+                </button>
+              </div>
             </div>
           </div>
+          }
         </div>
 
         <button
           class="text-blueGray bg-blueGray bg-opacity-10 py-4 w-full font-bold hover:text-purple-800 mt-4"
+          type="button"
+          (click)="addItem()"
         >
           + Add New Item
         </button>
@@ -232,8 +250,9 @@
         </button>
         <button
           class="text-white bg-purple hover:bg-purpleHover font-bold py-4 px-6 rounded-full"
+          type="submit"
         >
-          Save Changes
+          {{ isEditing ? "Save changes" : "Save & Send" }}
         </button>
       </div>
     </form>

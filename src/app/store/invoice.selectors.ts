@@ -5,9 +5,11 @@ import { InvoiceState } from '../models/invoice.model';
 export const selectInvoiceState =
   createFeatureSelector<InvoiceState>('invoices');
 
+export const selectInvoiceEntities =
+  invoiceAdapter.getSelectors(selectInvoiceState).selectEntities;
+
 export const {
   selectAll: selectAllInvoices,
-  selectEntities: selectInvoiceEntities,
   selectIds: selectInvoiceIds,
   selectTotal: selectInvoiceTotal,
 } = invoiceAdapter.getSelectors(selectInvoiceState);

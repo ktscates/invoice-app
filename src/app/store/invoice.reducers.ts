@@ -45,7 +45,17 @@ const _invoiceReducer = createReducer(
   on(InvoiceActions.selectInvoice, (state, { id }) => ({
     ...state,
     selectedInvoiceId: id,
-  }))
+  })),
+  on(InvoiceActions.markInvoiceAsPaid, (state, { invoiceId }) =>
+    invoiceAdapter.updateOne(
+      { id: invoiceId, changes: { status: 'paid' } },
+      state
+    )
+  ),
+  //delete reducer
+  on(InvoiceActions.deleteInvoice, (state, { id }) =>
+    invoiceAdapter.removeOne(id, state)
+  )
 );
 
 export function InvoiceReducer(

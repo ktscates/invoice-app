@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 import { CommonModule } from '@angular/common';
 import {
@@ -21,8 +27,8 @@ import { selectSelectedInvoice } from '../../store/invoice.selectors';
   templateUrl: './drawer.component.html',
   styleUrls: ['./drawer.component.css'],
 })
-export class DrawerComponent implements OnInit {
-  @Input() invoiceId: string | null = null;
+export class DrawerComponent implements OnInit, OnChanges {
+  @Input() invoiceId!: string;
   invoiceForm!: FormGroup;
   isEditing: boolean = false;
   isOpen = false;
@@ -32,10 +38,14 @@ export class DrawerComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+  }
 
-    if (this.invoiceId) {
-      this.isEditing = true;
-      this.loadInvoiceData(this.invoiceId);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['invoiceId']) {
+      this.isEditing = this.invoiceId !== null;
+      if (this.isEditing && this.invoiceId) {
+        this.loadInvoiceData(this.invoiceId);
+      }
     }
   }
 
@@ -57,6 +67,7 @@ export class DrawerComponent implements OnInit {
       projectDescription: ['', Validators.required],
       items: this.formBuilder.array([]),
       createdAt: [''],
+      status: ['pending'],
     });
   }
 
@@ -64,39 +75,45 @@ export class DrawerComponent implements OnInit {
     this.selectedInvoice$ = this.store.select(selectSelectedInvoice);
     this.selectedInvoice$.subscribe((invoice) => {
       if (invoice) {
-        this.invoiceForm.patchValue({
-          id: invoice.id,
-          senderStreetAddress: invoice.senderAddress.street,
-          senderCity: invoice.senderAddress.city,
-          senderPostCode: invoice.senderAddress.postCode,
-          senderCountry: invoice.senderAddress.country,
-          clientName: invoice.clientName,
-          clientEmail: invoice.clientEmail,
-          clientStreetAddress: invoice.clientAddress.street,
-          clientCity: invoice.clientAddress.city,
-          clientPostCode: invoice.clientAddress.postCode,
-          clientCountry: invoice.clientAddress.country,
-          invoiceDate: invoice.createdAt,
-          paymentTerms: invoice.paymentTerms,
-          projectDescription: invoice.description,
-          createdAt: invoice.createdAt,
-        });
-
-        this.items.clear();
-        invoice.items.forEach((item) => {
-          this.items.push(
-            this.formBuilder.group({
-              name: [item.name, Validators.required],
-              quantity: [
-                item.quantity,
-                [Validators.required, Validators.min(0)],
-              ],
-              price: [item.price, [Validators.required, Validators.min(0)]],
-              total: [{ value: item.total, disabled: true }],
-            })
-          );
-        });
+        this.patchFormValues(invoice);
       }
+    });
+  }
+
+  patchFormValues(invoice: Invoice): void {
+    if (!invoice) {
+      console.error('Invoice data is undefined or null');
+      return;
+    }
+    this.invoiceForm.patchValue({
+      id: invoice.id,
+      senderStreetAddress: invoice.senderAddress.street,
+      senderCity: invoice.senderAddress.city,
+      senderPostCode: invoice.senderAddress.postCode,
+      senderCountry: invoice.senderAddress.country,
+      clientName: invoice.clientName,
+      clientEmail: invoice.clientEmail,
+      clientStreetAddress: invoice.clientAddress.street,
+      clientCity: invoice.clientAddress.city,
+      clientPostCode: invoice.clientAddress.postCode,
+      clientCountry: invoice.clientAddress.country,
+      invoiceDate: invoice.createdAt,
+      paymentTerms: invoice.paymentTerms,
+      projectDescription: invoice.description,
+      createdAt: invoice.createdAt,
+      status: invoice.status,
+    });
+
+    this.items.clear();
+    invoice.items.forEach((item) => {
+      this.items.push(
+        this.formBuilder.group({
+          name: [item.name, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(0)]],
+          price: [item.price, [Validators.required, Validators.min(0)]],
+          total: [{ value: item.total, disabled: true }],
+        })
+      );
     });
   }
 
@@ -109,7 +126,61 @@ export class DrawerComponent implements OnInit {
     return `${randomLetters}${randomNumbers}`;
   }
 
-  onSubmit(): void {
+  saveAsDraft(): void {
+    if (this.invoiceForm.valid) {
+      const formValue = this.invoiceForm.value;
+
+      const invoice: Invoice = {
+        id: this.isEditing ? formValue.id : this.generateInvoiceId(),
+        createdAt: this.isEditing
+          ? formValue.createdAt
+          : new Date().toISOString().split('T')[0],
+        paymentDue: this.calculatePaymentDue(
+          formValue.invoiceDate,
+          formValue.paymentTerms
+        ),
+        description: formValue.projectDescription,
+        paymentTerms: this.parsePaymentTerms(formValue.paymentTerms),
+        clientName: formValue.clientName,
+        clientEmail: formValue.clientEmail,
+        status: 'draft',
+        senderAddress: {
+          street: formValue.senderStreetAddress,
+          city: formValue.senderCity,
+          postCode: formValue.senderPostCode,
+          country: formValue.senderCountry,
+        },
+        clientAddress: {
+          street: formValue.clientStreetAddress,
+          city: formValue.clientCity,
+          postCode: formValue.clientPostCode,
+          country: formValue.clientCountry,
+        },
+        items: formValue.items.map((item: any) => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.quantity * item.price,
+        })),
+        total: formValue.items.reduce(
+          (sum: any, item: any) => sum + item.quantity * item.price,
+          0
+        ),
+      };
+
+      if (this.isEditing) {
+        this.store.dispatch(InvoiceActions.updateInvoice({ invoice }));
+      } else {
+        this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
+      }
+
+      this.closeDrawer();
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+  saveAndSend(): void {
     if (this.invoiceForm.valid) {
       const formValue = this.invoiceForm.value;
 
@@ -153,10 +224,8 @@ export class DrawerComponent implements OnInit {
 
       if (this.isEditing) {
         this.store.dispatch(InvoiceActions.updateInvoice({ invoice }));
-        console.log('update:', invoice);
       } else {
         this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
-        console.log('create:', invoice);
       }
 
       this.closeDrawer();

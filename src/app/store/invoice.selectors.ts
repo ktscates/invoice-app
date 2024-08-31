@@ -8,11 +8,8 @@ export const selectInvoiceState =
 export const selectInvoiceEntities =
   invoiceAdapter.getSelectors(selectInvoiceState).selectEntities;
 
-export const {
-  selectAll: selectAllInvoices,
-  selectIds: selectInvoiceIds,
-  selectTotal: selectInvoiceTotal,
-} = invoiceAdapter.getSelectors(selectInvoiceState);
+export const { selectAll: selectAllInvoices, selectTotal: selectInvoiceTotal } =
+  invoiceAdapter.getSelectors(selectInvoiceState);
 
 export const selectSelectedInvoiceId = createSelector(
   selectInvoiceState,

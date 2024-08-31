@@ -54,6 +54,66 @@ export class InvoiceEffects {
     )
   );
 
+  updateInvoice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.updateInvoice),
+      switchMap(({ invoice }) =>
+        this.invoiceService.updateInvoice(invoice).pipe(
+          map((updatedInvoice) =>
+            InvoiceActions.loadInvoiceSuccess({ invoice: updatedInvoice })
+          ),
+          catchError((error) =>
+            of(InvoiceActions.loadInvoiceFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  deleteInvoice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.deleteInvoice),
+      switchMap(({ id }) =>
+        this.invoiceService.deleteInvoice(id).pipe(
+          switchMap(() => [
+            InvoiceActions.deleteInvoiceSuccess({ id }),
+            InvoiceActions.loadInvoices(),
+          ]),
+          catchError((error) =>
+            of(InvoiceActions.deleteInvoiceFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  markInvoiceAsPaid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(InvoiceActions.markInvoiceAsPaid),
+      switchMap(({ invoiceId }) =>
+        this.invoiceService.getInvoiceById(invoiceId).pipe(
+          switchMap((invoice: Invoice) => {
+            const updatedInvoice = {
+              ...invoice,
+              status: 'paid',
+            };
+            return this.invoiceService.updateInvoice(updatedInvoice).pipe(
+              map((updatedInvoice) =>
+                InvoiceActions.loadInvoiceSuccess({ invoice: updatedInvoice })
+              ),
+              catchError((error) =>
+                of(InvoiceActions.loadInvoiceFailure({ error }))
+              )
+            );
+          }),
+          catchError((error) =>
+            of(InvoiceActions.loadInvoiceFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private invoiceService: InvoiceService

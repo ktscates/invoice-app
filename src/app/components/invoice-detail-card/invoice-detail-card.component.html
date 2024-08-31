@@ -38,21 +38,26 @@
     <button
       class="text-blueGray text-sm font-bold bg-blueGray bg-opacity-10 px-8 py-4 rounded-full"
       type="button"
+      (click)="openEditDrawer()"
     >
       Edit
     </button>
     <button
       class="text-white text-sm font-bold bg-red px-8 py-4 rounded-full"
       type="button"
+      (click)="openDeleteModal()"
     >
       Delete
     </button>
+    @if ((invoice$ | async)!.status !== "paid") {
     <button
       class="text-white text-sm font-bold bg-purple px-8 py-4 rounded-full"
       type="button"
+      (click)="markAsPaid(invoiceId)"
     >
       Mark as Paid
     </button>
+    }
   </div>
 </div>
 
@@ -149,3 +154,10 @@
   </div>
 </div>
 }
+
+<app-drawer [invoiceId]="invoiceId" />
+
+<app-delete-modal
+  [isOpen]="isDeleteModalOpen"
+  [invoiceId]="invoiceId"
+></app-delete-modal>

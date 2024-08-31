@@ -12,8 +12,11 @@ const LOAD_INVOICE_FAILURE = '[Invoice Detail] Load Invoice With Failure';
 const CREATE_INVOICE = '[Invoice Form] Create Invoice';
 const UPDATE_INVOICE = '[Invoice Form] Update Invoice';
 const DELETE_INVOICE = '[Invoice List] Delete Invoice';
+const DELETE_INVOICE_SUCCESS = '[Invoice List] Delete Invoice With Success';
+const DELETE_INVOICE_FAILURE = '[Invoice List] Delete Invoice With Failure';
 
 const SELECT_INVOICE = '[Invoice List] Select Invoice';
+const MARK_AS_PAID = '[Invoice] Mark as Paid';
 
 export const loadInvoices = createAction(LOAD_INVOICES);
 export const loadInvoicesSuccess = createAction(
@@ -50,7 +53,20 @@ export const deleteInvoice = createAction(
   DELETE_INVOICE,
   props<{ id: string }>()
 );
+export const deleteInvoiceSuccess = createAction(
+  DELETE_INVOICE_SUCCESS,
+  props<{ id: string }>()
+);
+export const deleteInvoiceFailure = createAction(
+  DELETE_INVOICE_FAILURE,
+  props<{ error: any }>()
+);
 export const selectInvoice = createAction(
   SELECT_INVOICE,
   props<{ id: string }>()
 );
+export const markInvoiceAsPaid = createAction(
+  MARK_AS_PAID,
+  props<{ invoiceId: string }>()
+);
+

@@ -23,7 +23,7 @@
     </div>
 
     <!-- Form Content -->
-    <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="invoiceForm">
       <!-- Bill From -->
       <div class="mb-8">
         <h3 class="text-purple font-bold mb-4">Bill From</h3>
@@ -214,7 +214,7 @@
               <label class="block text-blueGray font-semibold mb-3"
                 >Total</label
               >
-              <div class="flex items-center justify-between">
+              <div class="flex justify-between items-center">
                 <span class="text-gray-800 font-semibold">{{
                   item.get("total")?.value
                 }}</span>
@@ -248,12 +248,24 @@
         >
           Cancel
         </button>
-        <button
-          class="text-white bg-purple hover:bg-purpleHover font-bold py-4 px-6 rounded-full"
-          type="submit"
-        >
-          {{ isEditing ? "Save changes" : "Save & Send" }}
-        </button>
+        <div class="flex gap-4">
+          @if (!isEditing) {
+          <button
+            class="text-white bg-purple hover:bg-purpleHover font-bold py-4 px-6 rounded-full"
+            type="button"
+            (click)="saveAsDraft()"
+          >
+            Save as Draft
+          </button>
+          }
+          <button
+            class="text-white bg-purple hover:bg-purpleHover font-bold py-4 px-6 rounded-full"
+            type="button"
+            (click)="saveAndSend()"
+          >
+            {{ isEditing ? "Save changes" : "Save & Send" }}
+          </button>
+        </div>
       </div>
     </form>
   </div>

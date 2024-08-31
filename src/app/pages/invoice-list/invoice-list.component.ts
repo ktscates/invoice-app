@@ -26,7 +26,7 @@ export class InvoiceListComponent {
   totalInvoices$: Observable<number>;
 
   constructor(private store: Store) {
-    this.invoices$ = this.store.select(selectors.selectAllInvoices);
+    this.invoices$ = this.store.select(selectors.selectFilteredInvoices);
     this.totalInvoices$ = this.store.select(selectors.selectInvoiceTotal);
   }
 

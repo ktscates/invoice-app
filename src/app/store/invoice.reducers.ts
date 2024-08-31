@@ -12,6 +12,7 @@ export const invoiceAdapter = createEntityAdapter<Invoice>({
 const initialState: InvoiceState = invoiceAdapter.getInitialState({
   selectedInvoiceId: null,
   error: null,
+  filter: 'all',
 });
 
 const _invoiceReducer = createReducer(
@@ -55,7 +56,11 @@ const _invoiceReducer = createReducer(
   //delete reducer
   on(InvoiceActions.deleteInvoice, (state, { id }) =>
     invoiceAdapter.removeOne(id, state)
-  )
+  ),
+  on(InvoiceActions.setFilter, (state, { filter }) => ({
+    ...state,
+    filter,
+  }))
 );
 
 export function InvoiceReducer(

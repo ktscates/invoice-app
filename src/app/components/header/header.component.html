@@ -32,13 +32,22 @@
       class="absolute sm:right-40 right-10 sm:top-10 top-14 mt-2 w-48 bg-white rounded-md shadow-lg z-20"
     >
       <ul class="py-1 text-navy text-base font-semibold">
-        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
+        <li
+          class="px-4 py-2 flex gap-2 items-center cursor-pointer"
+          (click)="setFilter('paid')"
+        >
           <input type="checkbox" /> Paid
         </li>
-        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
+        <li
+          class="px-4 py-2 flex gap-2 items-center cursor-pointer"
+          (click)="setFilter('pending')"
+        >
           <input type="checkbox" /> Pending
         </li>
-        <li class="px-4 py-2 flex gap-2 items-center cursor-pointer">
+        <li
+          class="px-4 py-2 flex gap-2 items-center cursor-pointer"
+          (click)="setFilter('draft')"
+        >
           <input type="checkbox" /> Draft
         </li>
       </ul>

@@ -18,6 +18,8 @@ const DELETE_INVOICE_FAILURE = '[Invoice List] Delete Invoice With Failure';
 const SELECT_INVOICE = '[Invoice List] Select Invoice';
 const MARK_AS_PAID = '[Invoice] Mark as Paid';
 
+const SET_FILTER = '[Invoice] Set Filter';
+
 export const loadInvoices = createAction(LOAD_INVOICES);
 export const loadInvoicesSuccess = createAction(
   LOAD_INVOICES_SUCCESS,
@@ -69,4 +71,7 @@ export const markInvoiceAsPaid = createAction(
   MARK_AS_PAID,
   props<{ invoiceId: string }>()
 );
-
+export const setFilter = createAction(
+  SET_FILTER,
+  props<{ filter: 'all' | 'paid' | 'pending' | 'draft' }>()
+);

@@ -33,4 +33,5 @@ export interface Invoice {
 export interface InvoiceState extends EntityState<Invoice> {
   selectedInvoiceId: string | null;
   error: string | null;
+  filter: 'all' | 'paid' | 'pending' | 'draft';
 }

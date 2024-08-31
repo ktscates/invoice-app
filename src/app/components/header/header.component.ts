@@ -6,6 +6,7 @@ import { Invoice } from '../../models/invoice.model';
 import { Store } from '@ngrx/store';
 import * as selectors from '../../store/invoice.selectors';
 import { CommonModule } from '@angular/common';
+import * as InvoiceActions from '../../store/invoice.actions';
 
 @Component({
   selector: 'app-header',
@@ -29,5 +30,10 @@ export class HeaderComponent {
 
   openDrawer() {
     this.drawer.openDrawer();
+  }
+
+  setFilter(filter: 'all' | 'paid' | 'pending' | 'draft') {
+    this.store.dispatch(InvoiceActions.setFilter({ filter }));
+    this.toggleDropdown();
   }
 }

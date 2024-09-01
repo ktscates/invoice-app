@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as InvoiceActions from '../../store/invoice.actions';
+import * as InvoiceActions from '../../store/invoice/invoice.actions';
 import { Router } from '@angular/router';
 
 @Component({

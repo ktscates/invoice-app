@@ -4,8 +4,8 @@ import { InvoiceItemCardComponent } from '../../components/invoice-item-card/inv
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Invoice } from '../../models/invoice.model';
-import * as InvoiceActions from '../../store/invoice.actions';
-import * as selectors from '../../store/invoice.selectors';
+import * as InvoiceActions from '../../store/invoice/invoice.actions';
+import * as selectors from '../../store/invoice/invoice.selectors';
 import { CommonModule } from '@angular/common';
 import { EmptyInvoicesComponent } from '../../components/empty-invoices/empty-invoices.component';
 

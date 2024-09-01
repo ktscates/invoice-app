@@ -1,5 +1,5 @@
 <nav
-  class="w-full lg:w-[103px] bg-sidebar lg:h-full h-20 flex lg:flex-col flex-row justify-between items-center z-30"
+  class="top-0 left-0 lg:w-[103px] w-full lg:h-full h-20 flex lg:flex-col flex-row justify-between items-center bg-sidebar relative z-50"
 >
   <app-icons class="lg:block hidden" iconType="logo-desk" />
   <app-icons class="lg:hidden block" iconType="logo-mob" />
@@ -7,7 +7,10 @@
   <div
     class="flex lg:flex-col flex-row items-center gap-6 lg:pb-6 lg:pr-0 pr-6"
   >
-    <app-icons iconType="dark" />
+    <button (click)="switchThemes()">
+      <app-icons class="dark:hidden block" iconType="dark" />
+      <app-icons class="dark:block hidden" iconType="light" />
+    </button>
 
     <div class="w-px lg:w-[103px] lg:h-px h-20 bg-divider"></div>
 

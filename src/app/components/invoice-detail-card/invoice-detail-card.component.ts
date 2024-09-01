@@ -4,11 +4,12 @@ import { Invoice } from '../../models/invoice.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as selectors from '../../store/invoice.selectors';
-import * as InvoiceActions from '../../store/invoice.actions';
+import * as selectors from '../../store/invoice/invoice.selectors';
+import * as InvoiceActions from '../../store/invoice/invoice.actions';
 import { CommonModule } from '@angular/common';
 import { DrawerComponent } from '../drawer/drawer.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
 @Component({
   selector: 'app-invoice-detail-card',
@@ -24,6 +25,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 })
 export class InvoiceDetailCardComponent {
   invoice$: Observable<Invoice | null | undefined>;
+  @ViewChild(InvoiceFormComponent) invoiceForm!: InvoiceFormComponent;
   @ViewChild(DrawerComponent) drawer!: DrawerComponent;
   invoiceId!: string;
   selectedInvoice$!: Observable<Invoice | null | undefined>;

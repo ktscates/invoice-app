@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Invoice } from '../models/invoice.model';
+import { Invoice } from '../../models/invoice.model';
 
 const LOAD_INVOICES = '[Invoice List] Load Invoices';
 const LOAD_INVOICES_SUCCESS = '[Invoice List] Load Invoices With Success';

@@ -4,9 +4,9 @@ import { DrawerComponent } from '../drawer/drawer.component';
 import { Observable, map } from 'rxjs';
 import { Invoice } from '../../models/invoice.model';
 import { Store } from '@ngrx/store';
-import * as selectors from '../../store/invoice.selectors';
+import * as selectors from '../../store/invoice/invoice.selectors';
 import { CommonModule } from '@angular/common';
-import * as InvoiceActions from '../../store/invoice.actions';
+import * as InvoiceActions from '../../store/invoice/invoice.actions';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +29,7 @@ export class HeaderComponent {
   }
 
   openDrawer() {
+    this.drawer.invoiceId = null;
     this.drawer.openDrawer();
   }
 

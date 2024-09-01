@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter } from '@ngrx/entity';
-import { Invoice, InvoiceState } from '../models/invoice.model';
+import { Invoice, InvoiceState } from '../../models/invoice.model';
 import * as InvoiceActions from './invoice.actions';
 
 // Create Entity Adapter

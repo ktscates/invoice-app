@@ -35,3 +35,12 @@ export interface InvoiceState extends EntityState<Invoice> {
   error: string | null;
   filter: 'all' | 'paid' | 'pending' | 'draft';
 }
+
+export interface ThemeState {
+  darkMode: boolean;
+}
+
+export interface AppState {
+  theme: ThemeState;
+  invoice: InvoiceState;
+}

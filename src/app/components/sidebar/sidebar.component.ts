@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 
 @Component({
@@ -8,4 +8,6 @@ import { IconsComponent } from '../icons/icons.component';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent {}
+export class SidebarComponent {
+  @Input() switchThemes!: () => void;
+}

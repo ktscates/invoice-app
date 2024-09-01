@@ -1,6 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { invoiceAdapter } from './invoice.reducers';
-import { InvoiceState, Invoice } from '../models/invoice.model';
+import { InvoiceState, Invoice } from '../../models/invoice.model';
 
 // Create a feature selector for the invoice state
 export const selectInvoiceState =

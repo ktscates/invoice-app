@@ -1,27 +1,65 @@
-# InvoiceApp
+# Angular Invoice Management Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
+## Table of Contents
 
-## Development server
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
+- [State Management](#state-management)
+  - [InvoiceState](#invoicestate)
+- [Live Link](#live-link)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Introduction
 
-## Code scaffolding
+This is an invoice management application built using Angular, NgRx, and TailwindCSS. The app allows users to create, edit, and manage invoices with responsive design and a dark/light mode toggle.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+- Create new invoices
+- Edit existing invoices
+- Mark invoices as paid or draft
+- Responsive layout with a sidebar and drawer for editing
+- Dark and light mode toggle with persistence across sessions
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Technologies Used
 
-## Running unit tests
+- Angular for frontend framework
+- NgRx for state management
+- TailwindCSS for styling
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+### Installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. **Clone the repository**:
 
-## Further help
+   ```bash
+   git clone https://github.com/ktscates/invoice-app.git
+   cd invoice-app
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+### Running the App
+
+    ```bash
+    ng serve
+    ```
+    Open your browser and navigate to `http://localhost:4200/`.
+
+## State Management
+
+### InvoiceState
+
+This state handles the management of invoices, including creating, updating, deleting, and fetching invoices. It also manages the currently selected invoice for editing.
+
+## Live Link
+
+You can access the deployed application at [Invoice App](https://ktscates-invoice-app.netlify.app/).

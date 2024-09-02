@@ -32,7 +32,6 @@ export class InvoiceFormService {
 
   patchFormValues(form: FormGroup, invoice: Invoice | null | undefined): void {
     if (!invoice) {
-      console.error('Invoice data is undefined or null');
       return;
     }
 
@@ -57,9 +56,7 @@ export class InvoiceFormService {
       });
 
       this.patchItems(form, invoice.items || []);
-    } catch (error) {
-      console.error('Error patching form values:', error);
-    }
+    } catch (error) {}
   }
 
   patchItems(form: FormGroup, items: any[]): void {

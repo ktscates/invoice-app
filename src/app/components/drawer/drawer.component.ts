@@ -1,24 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-  FormArray,
-} from '@angular/forms';
-import { Store } from '@ngrx/store';
-import * as InvoiceActions from '../../store/invoice/invoice.actions';
-import { Invoice } from '../../models/invoice.model';
-import { Observable } from 'rxjs';
-import { selectSelectedInvoice } from '../../store/invoice/invoice.selectors';
+import { ReactiveFormsModule } from '@angular/forms';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
 @Component({

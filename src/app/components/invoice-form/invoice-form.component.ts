@@ -5,6 +5,7 @@ import {
   OnChanges,
   SimpleChanges,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -20,12 +21,11 @@ import * as InvoiceActions from '../../store/invoice/invoice.actions';
 import { selectSelectedInvoice } from '../../store/invoice/invoice.selectors';
 import { Observable } from 'rxjs';
 import { IconsComponent } from '../icons/icons.component';
-import { DrawerComponent } from '../drawer/drawer.component';
 
 @Component({
   selector: 'app-invoice-form',
   standalone: true,
-  imports: [IconsComponent, ReactiveFormsModule, DrawerComponent],
+  imports: [IconsComponent, ReactiveFormsModule],
   templateUrl: './invoice-form.component.html',
   styleUrls: ['./invoice-form.component.css'],
 })
@@ -35,8 +35,6 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
   invoiceForm!: FormGroup;
   isEditing: boolean = false;
   selectedInvoice$!: Observable<Invoice | null | undefined>;
-
-  @ViewChild(DrawerComponent) drawer!: DrawerComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,7 +77,7 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
       if (this.isEditing) {
         this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
       }
-      this.closeDrawer(); // Call the passed down method
+      this.closeDrawer();
     } else {
       console.error('Form is invalid');
     }
@@ -97,7 +95,7 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
       } else {
         this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
       }
-      this.closeDrawer(); // Call the passed down method
+      this.closeDrawer();
     } else {
       console.error('Form is invalid');
     }

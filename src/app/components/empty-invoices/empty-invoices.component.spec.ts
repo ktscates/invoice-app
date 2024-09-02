@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EmptyInvoicesComponent } from './empty-invoices.component';
 
 describe('EmptyInvoicesComponent', () => {
@@ -8,10 +7,9 @@ describe('EmptyInvoicesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmptyInvoicesComponent]
-    })
-    .compileComponents();
-    
+      imports: [EmptyInvoicesComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EmptyInvoicesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

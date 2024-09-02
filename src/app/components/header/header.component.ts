@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 import { DrawerComponent } from '../drawer/drawer.component';
-import { Observable, map } from 'rxjs';
-import { Invoice } from '../../models/invoice.model';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as selectors from '../../store/invoice/invoice.selectors';
 import { CommonModule } from '@angular/common';

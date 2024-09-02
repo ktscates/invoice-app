@@ -38,8 +38,6 @@ export class InvoiceDetailCardComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.invoiceId = params.get('id')!;
-      console.log('Invoice ID:', this.invoiceId);
-
       if (this.invoiceId) {
         this.loadInvoiceData(this.invoiceId);
       }
@@ -66,7 +64,6 @@ export class InvoiceDetailCardComponent {
   // MARK AS PAID
   markAsPaid(invoiceId: string): void {
     this.store.dispatch(InvoiceActions.markInvoiceAsPaid({ invoiceId }));
-    console.log('button clicked', invoiceId);
   }
 
   openDeleteModal() {

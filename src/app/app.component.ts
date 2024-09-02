@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,18 +11,19 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'invoice-app';
   showHeader = true;
   switchedToDarkMode = false;
+  drawer!: DrawerComponent;
 
-  constructor(private router: Router) {
-    // Check if dark mode was enabled on previous visits
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    // Check if dark mode was previously enabled
     const darkModeSetting = localStorage.getItem('darkMode');
     this.switchedToDarkMode = darkModeSetting === 'true';
-
     this.applyTheme();
-
     this.router.events.subscribe(() => {
       this.showHeader = !this.router.url.includes('invoice-details');
     });
@@ -35,7 +35,7 @@ export class AppComponent {
     this.applyTheme();
   };
 
-  private applyTheme = () => {
+  applyTheme = () => {
     const body = document.querySelector('body');
     if (this.switchedToDarkMode) {
       body?.classList.add('dark');

@@ -7,7 +7,7 @@ import { Invoice } from '../../models/invoice.model';
   providedIn: 'root',
 })
 export class InvoiceService {
-  private apiUrl = 'https://berry-chocolate-seatbelt.glitch.me/api/invoices';
+  private apiUrl = 'https://button-wool-piranha.glitch.me/api/invoices';
 
   constructor(private http: HttpClient) {}
 

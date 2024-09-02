@@ -3,6 +3,7 @@ import { InvoiceDetailsComponent } from './invoice-details.component';
 import { provideStore } from '@ngrx/store';
 import { InvoiceReducer } from '../../store/invoice/invoice.reducers';
 import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('InvoiceDetailsComponent', () => {
   let component: InvoiceDetailsComponent;
@@ -14,7 +15,14 @@ describe('InvoiceDetailsComponent', () => {
       imports: [InvoiceDetailsComponent],
       providers: [
         provideStore({ invoices: InvoiceReducer }),
-        { provide: ActivatedRoute, useValue: router },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({
+              get: (key: string) => '1234', // Mocked ID
+            }),
+          },
+        },
       ],
     }).compileComponents();
 

@@ -61,8 +61,6 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
     this.selectedInvoice$.subscribe((invoice) => {
       if (invoice) {
         this.invoiceFormService.patchFormValues(this.invoiceForm, invoice);
-      } else {
-        console.warn('No invoice data available to patch');
       }
     });
   }
@@ -78,8 +76,6 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
         this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
       }
       this.closeDrawer();
-    } else {
-      console.error('Form is invalid');
     }
   }
 
@@ -96,8 +92,6 @@ export class InvoiceFormComponent implements OnInit, OnChanges {
         this.store.dispatch(InvoiceActions.createInvoice({ invoice }));
       }
       this.closeDrawer();
-    } else {
-      console.error('Form is invalid');
     }
   }
 

@@ -87,6 +87,15 @@ describe('InvoiceFormService', () => {
     expect(item2.get('total')?.value).toBe(150);
   });
 
+  it('should not patch form values if the invoice is null or undefined', () => {
+    const form = service.initializeForm();
+    const initialFormValue = form.value;
+    service.patchFormValues(form, null);
+    expect(form.value).toEqual(initialFormValue);
+    service.patchFormValues(form, undefined);
+    expect(form.value).toEqual(initialFormValue);
+  });
+
   it('should map form to invoice model', () => {
     const form = service.initializeForm();
     form.patchValue({
